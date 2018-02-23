@@ -1,0 +1,19 @@
+#!/bin/bash -x
+
+# set to 4 for the real job
+LEVEL=2
+
+cd $HOME
+if [ ! -d tmp ]
+then
+  mkdir tmp
+fi
+
+cd tmp
+
+if [ ! -d www.coloradomesa.edu ] ; then
+  wget --recursive --level=$LEVEL --domains=coloradomesa.edu http://www.coloradomesa.edu/library
+fi
+
+find www.coloradomesa.edu -type f -a \( -iname '*.html' -o -iname '*.htm' \) -exec egrep -H -n 'Colorado( |-|)Mesa' {} \;
+
