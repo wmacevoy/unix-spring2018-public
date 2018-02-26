@@ -12,7 +12,7 @@ fi
 cd tmp
 
 if [ ! -d www.coloradomesa.edu ] ; then
-    if [ -f  www.coloradomesa.edu.tgz ] ; then
+    if [ -f www.coloradomesa.edu.tgz ] ; then
 	tar zxf www.coloradomesa.edu.tgz
     else
 	wget --recursive --level=$LEVEL --domains=coloradomesa.edu http://www.coloradomesa.edu/library
@@ -23,11 +23,9 @@ if [ ! -f www.coloradomesa.edu.tgz ] ; then
     tar zcf www.coloradomesa.edu.tgz www.coloradomesa.edu
 fi
 
-
-
+# Find colorado mesa in text...
 # find www.coloradomesa.edu -type f -a \( -iname '*.html' -o -iname '*.htm' \) -exec egrep -H -n 'Colorado( |-|)Mesa' {} \; > hits
 
-
-
-
+# change http://www.coloradomesa.edu to https://www.coloradomesa.edu
+find www.coloradomesa.edu -type f -a \( -iname '*.html' -o -iname '*.htm' \) -exec sed -i- -e 's;http://\([^:\]*\)coloradomesa\.edu;https://\1coloradomesa.edu;g' {} \;
 
