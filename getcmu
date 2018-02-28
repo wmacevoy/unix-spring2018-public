@@ -27,5 +27,7 @@ fi
 # find www.coloradomesa.edu -type f -a \( -iname '*.html' -o -iname '*.htm' \) -exec egrep -H -n 'Colorado( |-|)Mesa' {} \; > hits
 
 # change http://www.coloradomesa.edu to https://www.coloradomesa.edu
-find www.coloradomesa.edu -type f -a \( -iname '*.html' -o -iname '*.htm' \) -exec sed -i- -e 's;http://\([^:\]*\)coloradomesa\.edu;https://\1coloradomesa.edu;g' {} \;
+find www.coloradomesa.edu -type f -a \
+     \( -iname '*.html' -o -iname '*.htm' \) \
+     -exec sed -i- -e 's;http://\([^:\]*\)coloradomesa\.edu;https://\1coloradomesa.edu;g' {} \;
 
