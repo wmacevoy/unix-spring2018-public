@@ -1,0 +1,22 @@
+#!/bin/bash
+
+export LEVEL=1
+
+reload() {
+    domains="$1"
+    shift
+    for url in "$@"
+    do
+	if [ ! -d "$url" ] ; then
+	    if [ -f "$url".tgz ] ; then
+		tar zxf "$url".tgz
+	    else
+		wget --recursive --level=$LEVEL --domains="$domains" http://"$url"
+	    fi
+	fi
+	
+	if [ ! -f "$url".tgz ] ; then
+	    tar zcf "$url".tgz "$url"
+	fi
+    done
+}

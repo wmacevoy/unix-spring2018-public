@@ -1,0 +1,28 @@
+#!/bin/bash
+
+here() {
+  CMD="$0"
+  DIR=$(dirname "$CMD")  
+  (cd "$DIR"; pwd)
+}
+
+. "$(here)/config"
+
+domain="coloradomesa.edu"
+
+while [ $# -gt 0 ]
+do
+  case "$1"
+  in
+    --domain=*) domain=${1#--domain=};;
+  esac
+  echo "$1"
+  shift
+done
+
+echo reload "$domain" www.coloradomesa.edu org.coloradomesa.edu
+
+
+
+
+
