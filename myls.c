@@ -3,23 +3,23 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <dirent.h>
+#include <errno.h>
 
-void myls_bad_sys(const char *dir) {
-  char cmd[1024];
-  snprintf(cmd,sizeof(cmd),"/bin/ls '%s'",dir);
-  system(cmd);
-}
-
-void myls(const char *dir) {
-  // char buf[1024];
-  // snprinf(sizeof(buf),buf,"/bin/ls '%s'",dir);
-  // system(cmd);
-  int pid = fork();
-  if (pid == 0) {
-    execl("/bin/ls","ls","--",dir,0);
+void myls(const char *dirname) {
+  DIR *dir = opendir(dirname);
+  if (dir == NULL) {
+    perror(NULL);
     exit(1);
-  } else {
-    waitpid(pid,0,0);
+  }
+  for (;;) {
+    struct dirent *entry = readdir(dir);
+    if (entry == NULL) break;
+    printf("%s\n", entry->d_name);
+  }
+  if (closedir(dir) != 0) {
+    perror(NULL);
+    exit(1);
   }
 }
 
